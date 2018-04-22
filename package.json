@@ -1,0 +1,17 @@
+{
+  "name": "bank_of_hysteria",
+  "version": "1.0.0",
+  "description": "Raspberry pi printer",
+  "main": "printer.js",
+  "dependencies": {
+    "serialport": "^6.2.0",
+    "thermalprinter": "^0.3.8"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "dev": "npm install && node printer.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Justin Lee and Frances Thai",
+  "license": "ISC"
+}
