@@ -9,7 +9,9 @@ Welcome to our printer! This is a small node.js app designed to read messages an
 ## Pushing Changes
 
 `git add .`
+
 `git commit -m '<Your message here>'`
+
 `git push origin master`
 
 ## Pulling Changes
