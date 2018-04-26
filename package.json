@@ -4,6 +4,8 @@
   "description": "Raspberry pi printer",
   "main": "printer.js",
   "dependencies": {
+    "firebase": "^4.13.1",
+    "moment": "^2.22.1",
     "serialport": "^6.2.0",
     "thermalprinter": "^0.3.8"
   },
