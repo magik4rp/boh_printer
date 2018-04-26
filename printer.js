@@ -12,6 +12,8 @@ var printer, numMessages
 function processMessage(dataKey, dataValue) {
   if (printer) {
     printer
+      .printLine('')
+      .printLine('')
       .center(true)
       .printImage(path)
       .bold(true)
@@ -30,6 +32,8 @@ function processMessage(dataKey, dataValue) {
       .printLine('Thank you for investing with us.')
       .printLine('Call or text anytime at')
       .printLine('510-985-9986')
+      .printLine('')
+      .printLine('')
       .print()
   }
   console.log('data key: ', dataKey)
