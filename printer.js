@@ -11,7 +11,7 @@ var printer, numMessages
 
 function processMessage(dataKey, dataValue) {
   if (printer) {
-    printer.printText(dataValue).print(function() {
+    printer.printLine(dataValue).print(function() {
       console.log('done')
       process.exit()
     })
@@ -51,3 +51,5 @@ serialPort.on('open', function() {
     initializeFirebase()
   })
 })
+
+initializeFirebase()
