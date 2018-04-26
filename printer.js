@@ -11,10 +11,7 @@ var printer, numMessages
 
 function processMessage(dataKey, dataValue) {
   if (printer) {
-    printer.printText(dataValue).print(function() {
-      console.log('done')
-      process.exit()
-    })
+    printer.printLine(dataValue).print()
   }
   console.log('data key: ', dataKey)
   console.log('data value: ', dataValue)
