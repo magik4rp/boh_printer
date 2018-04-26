@@ -6,12 +6,31 @@ var SerialPort = require('serialport'),
   }),
   Printer = require('thermalprinter')
 
-var path = __dirname + '/images/nodebot.png'
+var path = __dirname + '/images/boh.jpg'
 var printer, numMessages
 
 function processMessage(dataKey, dataValue) {
   if (printer) {
-    printer.printLine(dataValue).print()
+    printer
+      .center(true)
+      .printImage(path)
+      .bold(true)
+      .printLine('BANK OF HYSTERIA')
+      .bold(false)
+      .printLine('Your emotion is valid.')
+      .printLine('We hear you.')
+      .printLine('')
+      .center(false)
+      .bold(true)
+      .printLine('Deposit Details:')
+      .bold(false)
+      .printLine(dataValue)
+      .printLine('')
+      .center(true)
+      .printLine('Thank you for investing with us.')
+      .printLine('Call or text anytime at')
+      .printLine('510-985-9986')
+      .print()
   }
   console.log('data key: ', dataKey)
   console.log('data value: ', dataValue)
