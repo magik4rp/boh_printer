@@ -48,3 +48,5 @@ serialPort.on('open', function() {
     initializeFirebase()
   })
 })
+
+initializeFirebase()
