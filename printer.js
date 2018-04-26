@@ -6,7 +6,7 @@ var SerialPort = require('serialport'),
   }),
   Printer = require('thermalprinter')
 
-var path = __dirname + '/images/boh.jpg'
+var path = __dirname + '/images/boh_small.png'
 var printer, numMessages
 
 function processMessage(dataKey, dataValue) {
@@ -19,6 +19,7 @@ function processMessage(dataKey, dataValue) {
       .bold(true)
       .printLine('BANK OF HYSTERIA')
       .bold(false)
+      .printLine('')
       .printLine('Your emotion is valid.')
       .printLine('We hear you.')
       .printLine('')
