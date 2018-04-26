@@ -7,7 +7,7 @@ var SerialPort = require('serialport'),
   Printer = require('thermalprinter')
 
 var path = __dirname + '/images/nodebot.png'
-var printer
+var printer, numMessages
 
 function processMessage(dataKey, dataValue) {
   if (printer) {
@@ -33,9 +33,15 @@ function initializeFirebase() {
   firebase.initializeApp(config)
   var database = firebase.database()
   var messages = firebase.database().ref('messages')
+  var messageCount = firebase.database().ref('messageCount')
 
   messages.on('child_added', function(data) {
     processMessage(data.key, data.val())
+  })
+
+  // numMessages is updated with the number of messages we have in total
+  messageCount.on('value', function(data) {
+    numMessages = data.val()
   })
 }
 
