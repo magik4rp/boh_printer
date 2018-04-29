@@ -39,16 +39,59 @@ val = int(float(sys.argv[1]))
 display.set_brightness(brightness)
 display.clear()
 for x in range(val):
-    if val > 15:
+    if val > 14:
         display.set_bar(x, BicolorBargraph24.RED)
         display.write_display()
     else:
-        if val > 8 and val<16:
+        if val > 7 and val<15:
             display.set_bar(x, BicolorBargraph24.YELLOW)
             display.write_display()
         else:
             display.set_bar(x, BicolorBargraph24.GREEN)
             display.write_display()
+i = 1
+while True:
+    if val > 14:
+        if i == 1:
+            display.set_bar(val, BicolorBargraph24.RED)
+            display.write_display()
+            i -= 1
+        else:
+            display.set_bar(val, BicolorBargraph24.OFF)
+            display.write_display()
+            i += 1
+        time.sleep(0.5)
+    else:
+        if val > 7 and val<15:
+            if i == 1:
+                display.set_bar(val, BicolorBargraph24.YELLOW)
+                display.write_display()
+                i -= 1
+            else:
+                display.set_bar(val, BicolorBargraph24.OFF)
+                display.write_display()
+                i += 1
+            time.sleep(0.5)
+        else:
+            if i == 1:
+                display.set_bar(val, BicolorBargraph24.GREEN)
+                display.write_display()
+                i -= 1
+            else:
+                display.set_bar(val, BicolorBargraph24.OFF)
+                display.write_display()
+                i += 1
+            time.sleep(0.5)
+##    if i == 1:
+##        display.set_bar(val, BicolorBargraph24.RED)
+##        display.write_display()
+##        i -= 1
+##    else:
+##        display.set_bar(val, BicolorBargraph24.OFF)
+##        display.write_display()
+##        i += 1
+##    time.sleep(0.5)
+
 ##while True:
 ##    # Set display brightness (15 is max, 0 is min).
 ##    display.set_brightness(brightness)

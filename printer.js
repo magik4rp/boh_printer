@@ -143,7 +143,7 @@ function initializeFirebase() {
     numMessages = data.val()
   })
 }
-var numMessagestest=13;
+var numMessagestest=5;
 
 
 serialPort.on('open', function() {
