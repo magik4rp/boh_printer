@@ -100,7 +100,7 @@ function processMessage(dataKey, dataValue) {
           pythonPath: 'python',
           pythonOptions: ['-u'], // get print results in real-time
           scriptPath: '/home/pi/boh_printer',
-          args: [numMessagestest]
+          args: [count]
         };
 
         PythonShell.run('bicolor_bargraph24_test.py', options, function (err, results) {
@@ -114,11 +114,11 @@ function processMessage(dataKey, dataValue) {
   }
   console.log('data key: ', dataKey)
   console.log('data value: ', dataValue)
-  console.log('number of messages in bank:', numMessagestest)
-
+  console.log('number of messages in bank:', numMessages)
+  //console.log('TEST number of messages in bank:', numMessagestest)
 
 }  
-
+var count = 0;
 function initializeFirebase() {
   var firebase = require('firebase')
   var config = {
@@ -133,6 +133,18 @@ function initializeFirebase() {
   var database = firebase.database()
   var messages = firebase.database().ref('messages')
   var messageCount = firebase.database().ref('messageCount')
+  //var count = 0;
+  messages.on("child_added", function(snap) {
+    count++;
+    console.log("added:", snap.key);
+  });
+
+    // length will always equal count, since snap.val() will include every child_added event
+    // triggered before this point
+    messages.once("value", function(snap) {
+      console.log("initial data loaded!", snap.numChildren() === count);
+      console.log('TEST COUNT number of messages in bank:', count)
+    });
 
   messages.on('child_added', function(data) {
     processMessage(data.key, data.val())
@@ -143,7 +155,8 @@ function initializeFirebase() {
     numMessages = data.val()
   })
 }
-var numMessagestest=5;
+//need to map numMessages to be inside (0,23)
+//var numMessagestest = 10;
 
 
 serialPort.on('open', function() {
