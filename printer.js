@@ -73,7 +73,7 @@ function processMessage(dataKey, dataValue) {
 
       }
 
-      setTimeout(turnOff, 20000);
+      setTimeout(turnOff, 25000);
       
       
       var blinkInterval3 = setInterval(blinkLED3, 500);
