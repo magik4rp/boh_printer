@@ -161,13 +161,14 @@ function initializeFirebase() {
   // length will always equal count, since snap.val() will include every child_added event
   // triggered before this point
   messages.once('value', function(snap) {
-    console.log('initial data loaded!', snap.numChildren() === count)
-    console.log('TEST COUNT number of messages in bank:', count)
+    console.log('initial data loaded!', snap.numChildren())
+    count = snap.numChildren()
   })
 
   const debouncedProcessMessage = debounce(processMessage, 2000)
   messages.on('child_added', function(data) {
     if (initialDataLoaded) {
+      count++
       debouncedProcessMessage(data.key, data.val())
     }
   })
