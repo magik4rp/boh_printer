@@ -69,6 +69,7 @@ function processMessage(dataKey, dataValue) {
       .printLine('')
       .print()
     initializeBarGraph()
+    blink()
   }
   console.log('data key: ', dataKey)
   console.log('data value: ', dataValue)
@@ -192,5 +193,3 @@ serialPort.on('error', () => {
   serialPort.close(() => console.log('Closed serial port.'))
   serialPort.flush(() => console.log('Serial port flushed.'))
 })
-
-blink()
