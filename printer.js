@@ -169,7 +169,7 @@ function initializeBarGraph() {
       console.log('results: %j', results)
     }
   )
-  //barScript.terminate()
+  barScript.terminate()
 }
 function initializeFirebase() {
   var firebase = require('firebase')
