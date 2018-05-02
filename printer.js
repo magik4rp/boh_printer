@@ -78,7 +78,6 @@ function processMessage(dataKey, dataValue) {
           console.log('Done printing job.')
           resolve()
         })
-      console.log('Printer call: ', printerCall)
       initializeBarGraph()
       blink()
     }
