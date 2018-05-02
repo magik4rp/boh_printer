@@ -39,7 +39,7 @@ val = int(float(sys.argv[1]))
 display.set_brightness(brightness)
 display.clear()
 if val < 23:
-    # for x in range(val):
+     for x in range(val):
 
         # if val > 14:
             display.set_bar(x, BicolorBargraph24.RED)
