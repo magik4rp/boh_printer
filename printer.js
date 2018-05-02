@@ -12,7 +12,7 @@ const SerialPort = require('serialport'),
 //hello
 var path = __dirname + '/images/boh_small.png'
 var printer, numMessages
-var initialDataLoaded = true
+var initialDataLoaded = false
 
 // LED light stuff
 var Gpio = require('onoff').Gpio //include onoff to interact with the GPIO
