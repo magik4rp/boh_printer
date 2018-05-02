@@ -179,7 +179,6 @@ serialPort.on('open', function() {
   printer.on('ready', function() {
     initializeFirebase()
   })
-  initializeBarGraph()
 })
 
-initializeFirebase()
+initializeBarGraph()
