@@ -11,11 +11,11 @@ var path = __dirname + '/images/boh_small.png'
 var printer, numMessages
 var initialDataLoaded = true
 var Gpio = require('onoff').Gpio //include onoff to interact with the GPIO
-var LED1 = new Gpio(21, 'out') //display red
-var LED2 = new Gpio(26, 'out') //display red
-var LED3 = new Gpio(20, 'out') //blinking red button
-var LED4 = new Gpio(19, 'out') //blinking blue button
-var LED5 = new Gpio(13, 'out') //blinking blue button
+var LED1 = new Gpio(21, 'out', { debounceTimeout: 10 }) //display red
+var LED2 = new Gpio(26, 'out', { debounceTimeout: 10 }) //display red
+var LED3 = new Gpio(20, 'out', { debounceTimeout: 10 }) //blinking red button
+var LED4 = new Gpio(19, 'out', { debounceTimeout: 10 }) //blinking blue button
+var LED5 = new Gpio(13, 'out', { debounceTimeout: 10 }) //blinking blue button
 var blinkInterval = setInterval(blinkLED, 200) //run the blinkLED function every 250ms
 var blinkInterval2 = setInterval(blinkLED2, 450)
 
