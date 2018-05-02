@@ -176,8 +176,8 @@ function initializeFirebase() {
 //need to map numMessages to be inside (0,23)
 //var numMessagestest = 10;
 
+serialPort.flush(() => console.log('Flushed!'))
 serialPort.on('open', function() {
-  serialPort.flush(() => console.log('Flushed!'))
   printer = new Printer(serialPort)
   printer.on('ready', function() {
     initializeFirebase()
