@@ -82,8 +82,8 @@ function blink() {
     //function to stop blinking
     LED1.writeSync(0) // Turn LED off
     LED2.writeSync(0)
-    LED1.unexport() // Unexport GPIO to free resources
-    LED2.unexport() // Unexport GPIO to free resources
+    //LED1.unexport() // Unexport GPIO to free resources
+    //LED2.unexport() // Unexport GPIO to free resources
   }
 
   setTimeout(turnOff, 25000)
@@ -104,7 +104,7 @@ function blink() {
     //function to stop blinking
     clearInterval(blinkInterval3) // Stop blink intervals
     LED3.writeSync(0) // Turn LED off
-    LED3.unexport() // Unexport GPIO to free resources
+    //LED3.unexport() // Unexport GPIO to free resources
   }
 
   setTimeout(endBlink3, 20000) //stop blinking after 5 seconds
