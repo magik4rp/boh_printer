@@ -95,29 +95,6 @@ function processMessage(dataKey, dataValue) {
       LED3.writeSync(0) // Turn LED off
       LED3.unexport() // Unexport GPIO to free resources
     }
-
-    //needs to be continuously updating
-    var PythonShell = require('python-shell')
-
-    var options = {
-      mode: 'text',
-      pythonPath: 'python',
-      pythonOptions: ['-u'], // get print results in real-time
-      scriptPath: '/home/pi/boh_printer',
-      args: [count]
-    }
-
-    var barScript = PythonShell.run(
-      'bicolor_bargraph24_test.py',
-      options,
-      function(err, results) {
-        if (err) throw err
-        // results is an array consisting of messages collected during execution
-        console.log('results: %j', results)
-      }
-    )
-    barScript.end(() => console.log('Python bar script ended.'))
-
     setTimeout(endBlink3, 20000) //stop blinking after 5 seconds
   }
   console.log('data key: ', dataKey)
@@ -125,6 +102,43 @@ function processMessage(dataKey, dataValue) {
   console.log('number of messages in bank:', numMessages)
   //console.log('TEST number of messages in bank:', numMessagestest)
 }
+
+function initializeBargraph() {
+  const percent = require('cpu-percent')
+  const j5 = require('johnny-five')
+  const raspi = require('raspi-io')
+  const bargraph = require('bicolor-bargraph')
+  function color(i) {
+    if (i > 16) {
+      return bargraph.GREEN
+    } else if (i > 8) {
+      return bargraph.YELLOW
+    }
+    return bargraph.RED
+  }
+
+  new j5.Board({
+    io: new raspi(),
+    repl: false
+  }).on('ready', () => {
+    const bar = bargraph()
+    percent((err, value) => {
+      if (err) {
+        throw err
+      }
+      // invert numbers to change "direction"
+      const pct = Math.round(24 * (100 - value) / 100)
+      const [cols, values] = [[], []]
+      for (let i = 0; i < 24; i++) {
+        cols.push(i)
+        values.push(pct <= i ? color(i) : bargraph.OFF)
+      }
+      // sets many LEDs at once in a single I2C write
+      bar.leds(cols, values)
+    })
+  })
+}
+
 var count = 0
 function initializeFirebase() {
   var firebase = require('firebase')
@@ -175,6 +189,7 @@ serialPort.on('open', function() {
   printer.on('ready', function() {
     initializeFirebase()
   })
+  initializeBargraph()
 })
 
 initializeFirebase()
