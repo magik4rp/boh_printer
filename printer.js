@@ -66,42 +66,44 @@ function processMessage(dataKey, dataValue) {
       .printLine('')
       .printLine('')
       .print()
-
-    function turnOff() {
-      //function to stop blinking
-      LED1.writeSync(0) // Turn LED off
-      LED2.writeSync(0)
-      LED1.unexport() // Unexport GPIO to free resources
-      LED2.unexport() // Unexport GPIO to free resources
-    }
-
-    setTimeout(turnOff, 25000)
-
-    var blinkInterval3 = setInterval(blinkLED3, 500)
-
-    function blinkLED3() {
-      //function to start blinking
-      if (LED3.readSync() === 0) {
-        //check the pin state, if the state is 0 (or off)
-        LED3.writeSync(1) //set pin state to 1 (turn LED on)
-      } else {
-        LED3.writeSync(0) //set pin state to 0 (turn LED off)
-      }
-    }
-
-    function endBlink3() {
-      //function to stop blinking
-      clearInterval(blinkInterval3) // Stop blink intervals
-      LED3.writeSync(0) // Turn LED off
-      LED3.unexport() // Unexport GPIO to free resources
-    }
-
-    setTimeout(endBlink3, 20000) //stop blinking after 5 seconds
   }
   console.log('data key: ', dataKey)
   console.log('data value: ', dataValue)
   console.log('number of messages in bank:', numMessages)
   //console.log('TEST number of messages in bank:', numMessagestest)
+}
+
+function blink() {
+  function turnOff() {
+    //function to stop blinking
+    LED1.writeSync(0) // Turn LED off
+    LED2.writeSync(0)
+    LED1.unexport() // Unexport GPIO to free resources
+    LED2.unexport() // Unexport GPIO to free resources
+  }
+
+  setTimeout(turnOff, 25000)
+
+  var blinkInterval3 = setInterval(blinkLED3, 500)
+
+  function blinkLED3() {
+    //function to start blinking
+    if (LED3.readSync() === 0) {
+      //check the pin state, if the state is 0 (or off)
+      LED3.writeSync(1) //set pin state to 1 (turn LED on)
+    } else {
+      LED3.writeSync(0) //set pin state to 0 (turn LED off)
+    }
+  }
+
+  function endBlink3() {
+    //function to stop blinking
+    clearInterval(blinkInterval3) // Stop blink intervals
+    LED3.writeSync(0) // Turn LED off
+    LED3.unexport() // Unexport GPIO to free resources
+  }
+
+  setTimeout(endBlink3, 20000) //stop blinking after 5 seconds
 }
 
 function initializeBarGraph() {
@@ -182,3 +184,4 @@ serialPort.on('open', function() {
 })
 
 initializeBarGraph()
+blink()
