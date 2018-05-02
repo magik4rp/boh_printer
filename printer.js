@@ -175,13 +175,19 @@ function initializeFirebase() {
 //need to map numMessages to be inside (0,23)
 //var numMessagestest = 10;
 
-serialPort.flush(() => {
-  serialPort.on('open', function() {
+serialPort.on('open', function() {
+  serialPort.flush(e => {
+    console.log('serialPort initial flush: ', e)
     printer = new Printer(serialPort)
     printer.on('ready', function() {
       initializeFirebase()
     })
   })
+})
+
+serialPort.on('error', () => {
+  serialPort.close(() => console.log('Closed serial port.'))
+  serialPort.flush(() => console.log('Serial port flushed.'))
 })
 
 //blink()
