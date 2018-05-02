@@ -125,7 +125,8 @@ function initializeBarGraph() {
       console.log('results: %j', results)
     }
   )
-  barScript.end(() => console.log('Python bar script ended.'))
+  console.log('barScript: \n', barScript)
+  barScript.terminate()
 }
 
 var count = 0
