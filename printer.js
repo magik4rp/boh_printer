@@ -5,7 +5,7 @@ var SerialPort = require('serialport'),
     baudRate: 19200
   }),
   Printer = require('thermalprinter')
-
+//hello
 var path = __dirname + '/images/boh_small.png'
 var printer, numMessages
 var Gpio = require('onoff').Gpio; //include onoff to interact with the GPIO
@@ -63,7 +63,7 @@ function processMessage(dataKey, dataValue) {
       .printLine('')
       .printLine('')
       .print()
-  
+
 
       function turnOff() { //function to stop blinking
         LED1.writeSync(0); // Turn LED off
@@ -74,8 +74,8 @@ function processMessage(dataKey, dataValue) {
       }
 
       setTimeout(turnOff, 25000);
-      
-      
+
+
       var blinkInterval3 = setInterval(blinkLED3, 500);
 
       function blinkLED3() { //function to start blinking
@@ -91,7 +91,7 @@ function processMessage(dataKey, dataValue) {
           LED3.writeSync(0); // Turn LED off
           LED3.unexport(); // Unexport GPIO to free resources
         }
-      
+
       //needs to be continuously updating
         var PythonShell = require('python-shell');
 
@@ -110,14 +110,14 @@ function processMessage(dataKey, dataValue) {
         });
 
     setTimeout(endBlink3, 20000); //stop blinking after 5 seconds
-    
+
   }
   console.log('data key: ', dataKey)
   console.log('data value: ', dataValue)
   console.log('number of messages in bank:', numMessages)
   //console.log('TEST number of messages in bank:', numMessagestest)
 
-}  
+}
 var count = 0;
 function initializeFirebase() {
   var firebase = require('firebase')
