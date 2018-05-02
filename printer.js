@@ -230,7 +230,6 @@ function initializeFirebase() {
 
 serialPort.on('open', function() {
   serialPort.flush(e => {
-    printerQueue.start()
     printer = new Printer(serialPort)
     printer.on('ready', function() {
       initializeFirebase()
