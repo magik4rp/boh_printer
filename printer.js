@@ -1,5 +1,4 @@
 const { apiKey, messagingSenderId } = require('./constants')
-const initializeBarGraph = require('./bargraph')
 var moment = require('moment')
 var SerialPort = require('serialport'),
   serialPort = new SerialPort('/dev/serial0', {
@@ -96,12 +95,37 @@ function processMessage(dataKey, dataValue) {
       LED3.writeSync(0) // Turn LED off
       LED3.unexport() // Unexport GPIO to free resources
     }
+
     setTimeout(endBlink3, 20000) //stop blinking after 5 seconds
   }
   console.log('data key: ', dataKey)
   console.log('data value: ', dataValue)
   console.log('number of messages in bank:', numMessages)
   //console.log('TEST number of messages in bank:', numMessagestest)
+}
+
+function initializeBarGraph() {
+  //needs to be continuously updating
+  var PythonShell = require('python-shell')
+
+  var options = {
+    mode: 'text',
+    pythonPath: 'python',
+    pythonOptions: ['-u'], // get print results in real-time
+    scriptPath: '/home/pi/boh_printer',
+    args: [count]
+  }
+
+  var barScript = PythonShell.run(
+    'bicolor_bargraph24_test.py',
+    options,
+    function(err, results) {
+      if (err) throw err
+      // results is an array consisting of messages collected during execution
+      console.log('results: %j', results)
+    }
+  )
+  barScript.end(() => console.log('Python bar script ended.'))
 }
 
 var count = 0
