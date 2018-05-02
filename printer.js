@@ -1,4 +1,5 @@
 const { apiKey, messagingSenderId } = require('./constants')
+const { debounce } = lodash
 var moment = require('moment')
 var SerialPort = require('serialport'),
   serialPort = new SerialPort('/dev/serial0', {
@@ -8,7 +9,7 @@ var SerialPort = require('serialport'),
 //hello
 var path = __dirname + '/images/boh_small.png'
 var printer, numMessages
-var initialDataLoaded = false
+var initialDataLoaded = true
 // var Gpio = require('onoff').Gpio //include onoff to interact with the GPIO
 // var LED1 = new Gpio(21, 'out') //display red
 // var LED2 = new Gpio(26, 'out') //display red
@@ -163,9 +164,10 @@ function initializeFirebase() {
     console.log('TEST COUNT number of messages in bank:', count)
   })
 
+  const debouncedProcessMessage = debounce(processMessage)
   messages.on('child_added', function(data) {
     if (initialDataLoaded) {
-      processMessage(data.key, data.val())
+      debouncedProcessMessage(data.key, data.val())
     }
   })
 
