@@ -36,12 +36,12 @@ display.begin()
 
 brightness = 15
 val = int(float(sys.argv[1]))
-print(val)
+print('VALUE SHOULD BE INTEGER: ', val)
+val = val % 23
 display.set_brightness(brightness)
 display.clear()
-if val < 23:
+if val > 0:
      for x in range(val):
-
         # if val > 14:
             display.set_bar(x, BicolorBargraph24.RED)
             display.write_display()
@@ -54,7 +54,9 @@ if val < 23:
         #         display.write_display()
 else:
     j = 1
-    while True:
+    m = 1
+    while m < 10:
+        m += 1
         if j == 1:
             display.set_bar(0, BicolorBargraph24.RED)
             display.write_display()
