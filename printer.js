@@ -171,6 +171,7 @@ function initializeBarGraph() {
   )
   barScript.terminate()
 }
+var count = 5
 function initializeFirebase() {
   var firebase = require('firebase')
   var config = {
@@ -190,7 +191,6 @@ function initializeFirebase() {
   var messages = firebase.database().ref('messages')
   var messageCount = firebase.database().ref('messageCount')
 
-  var count = 0
   messages.once('value', function(snapshot) {
     initialDataLoaded = true
   })
