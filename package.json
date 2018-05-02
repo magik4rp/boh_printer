@@ -10,6 +10,7 @@
     "onoff": "^3.0.2",
     "python-shell": "^0.5.0",
     "serialport": "^6.2.0",
+    "task-queue": "^1.0.2",
     "thermalprinter": "^0.3.8"
   },
   "devDependencies": {},

@@ -1,7 +1,10 @@
 const { apiKey, messagingSenderId } = require('./constants')
 const { debounce } = require('lodash')
-var moment = require('moment')
-var SerialPort = require('serialport'),
+const tq = require('task-queue')
+const moment = require('moment')
+
+const printerQueue = tq.Queue({ capacity: 20, concurrency: 1, timeout: 2000 })
+const SerialPort = require('serialport'),
   serialPort = new SerialPort('/dev/serial0', {
     baudRate: 19200
   }),
@@ -10,6 +13,8 @@ var SerialPort = require('serialport'),
 var path = __dirname + '/images/boh_small.png'
 var printer, numMessages
 var initialDataLoaded = true
+
+// LED light stuff
 var Gpio = require('onoff').Gpio //include onoff to interact with the GPIO
 var LED1 = new Gpio(21, 'out', { debounceTimeout: 10 }) //display red
 var LED2 = new Gpio(26, 'out', { debounceTimeout: 10 }) //display red
@@ -202,11 +207,10 @@ function initializeFirebase() {
     count = snap.numChildren()
   })
 
-  const debouncedProcessMessage = debounce(processMessage, 2000)
   messages.on('child_added', function(data) {
     if (initialDataLoaded) {
       count++
-      debouncedProcessMessage(data.key, data.val())
+      printerQueue.enqueue(processMessage, { args: [data.key, data.val()] })
     }
   })
 
@@ -220,6 +224,7 @@ function initializeFirebase() {
 
 serialPort.on('open', function() {
   serialPort.flush(e => {
+    printerQueue.start()
     printer = new Printer(serialPort)
     printer.on('ready', function() {
       initializeFirebase()
