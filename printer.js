@@ -8,7 +8,7 @@ var SerialPort = require('serialport'),
   Printer = require('thermalprinter')
 //hello
 var path = __dirname + '/images/boh_small.png'
-var printer, numMessages
+var printer, numMessages, barScript
 var initialDataLoaded = true
 var Gpio = require('onoff').Gpio //include onoff to interact with the GPIO
 var LED1 = new Gpio(21, 'out', { debounceTimeout: 10 }) //display red
@@ -42,6 +42,7 @@ function processMessage(dataKey, dataValue) {
   if (printer) {
     // LED1.writeSync(1)
     // LED2.writeSync(1)
+    
     printer
       .printLine('')
       .printLine('')
@@ -149,6 +150,9 @@ function blink() {
 }
 
 function initializeBarGraph() {
+    if (barScript) {
+        barScript.terminate()
+    }
   console.log('Count is: ', count)
   //needs to be continuously updating
   var PythonShell = require('python-shell')
@@ -160,7 +164,7 @@ function initializeBarGraph() {
     args: [count]
   }
 
-  var barScript = PythonShell.run(
+  barScript = PythonShell.run(
     'bicolor_bargraph24_test.py',
     options,
     function(err, results) {
@@ -169,9 +173,9 @@ function initializeBarGraph() {
       console.log('results: %j', results)
     }
   )
-  barScript.terminate()
+  barScript.on('message', message => {console.log('Message: ', message)})
 }
-var count = 5
+var count = 0
 function initializeFirebase() {
   var firebase = require('firebase')
   var config = {

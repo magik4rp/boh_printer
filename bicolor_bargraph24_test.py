@@ -36,6 +36,7 @@ display.begin()
 
 brightness = 15
 val = int(float(sys.argv[1]))
+print(val)
 display.set_brightness(brightness)
 display.clear()
 if val < 23:
