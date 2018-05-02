@@ -43,11 +43,11 @@ function blinkLED2() {
   }
 }
 
-function processMessage(dataKey, dataValue) {
+async function processMessage(dataKey, dataValue) {
   if (printer) {
     // LED1.writeSync(1)
     // LED2.writeSync(1)
-    printer
+    await printer
       .printLine('')
       .printLine('')
       .center(true)
