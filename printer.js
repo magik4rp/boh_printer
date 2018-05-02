@@ -152,7 +152,6 @@ function initializeBarGraph() {
   console.log('Count is: ', count)
   //needs to be continuously updating
   var PythonShell = require('python-shell')
-  var count = 0
   var options = {
     mode: 'text',
     pythonPath: 'python',
@@ -172,6 +171,7 @@ function initializeBarGraph() {
   )
   barScript.terminate()
 }
+var count = 0
 function initializeFirebase() {
   var firebase = require('firebase')
   var config = {
