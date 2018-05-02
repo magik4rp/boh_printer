@@ -109,43 +109,43 @@ function blink() {
     //LED3.unexport() // Unexport GPIO to free resources
   }
 
-  setTimeout(endBlink3, 25000) //stop blinking after 5 seconds
+  setTimeout(endBlink3, 22000) //stop blinking after 5 seconds
   function blinkLED4() {
     //function to start blinking
-    if (LED4.readSync() === 0) {
+    if (LED1.readSync() === 0) {
       //check the pin state, if the state is 0 (or off)
-      LED4.writeSync(1) //set pin state to 1 (turn LED on)
+      LED1.writeSync(1) //set pin state to 1 (turn LED on)
     } else {
-      LED4.writeSync(0) //set pin state to 0 (turn LED off)
+      LED1.writeSync(0) //set pin state to 0 (turn LED off)
     }
   }
 
   function endBlink4() {
     //function to stop blinking
     clearInterval(blinkInterval4) // Stop blink intervals
-    LED4.writeSync(0) // Turn LED off
+    LED1.writeSync(0) // Turn LED off
     //LED3.unexport() // Unexport GPIO to free resources
   }
 
-  setTimeout(endBlink4, 25000) //stop blinking after 5 seconds
+  setTimeout(endBlink4, 22000) //stop blinking after 5 seconds
   function blinkLED5() {
     //function to start blinking
-    if (LED5.readSync() === 0) {
+    if (LED2.readSync() === 0) {
       //check the pin state, if the state is 0 (or off)
-      LED5.writeSync(1) //set pin state to 1 (turn LED on)
+      LED2.writeSync(1) //set pin state to 1 (turn LED on)
     } else {
-      LED5.writeSync(0) //set pin state to 0 (turn LED off)
+      LED2.writeSync(0) //set pin state to 0 (turn LED off)
     }
   }
 
   function endBlink5() {
     //function to stop blinking
     clearInterval(blinkInterval5) // Stop blink intervals
-    LED5.writeSync(0) // Turn LED off
+    LED2.writeSync(0) // Turn LED off
     //LED3.unexport() // Unexport GPIO to free resources
   }
 
-  setTimeout(endBlink5, 25000) //stop blinking after 5 seconds
+  setTimeout(endBlink5, 22000) //stop blinking after 5 seconds
 }
 
 function initializeBarGraph() {
