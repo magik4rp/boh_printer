@@ -70,7 +70,7 @@ function processMessage(dataKey, dataValue) {
         .center(true)
         .printLine('Thank you for investing with us.')
         .printLine('Call or text anytime at')
-        .printLine('510-985-9986')
+        .printLine('(510) 343-7607')
         .printLine('www.bohproject.org')
         .printLine('')
         .printLine('')
