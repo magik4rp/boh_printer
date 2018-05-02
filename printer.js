@@ -1,5 +1,5 @@
 const { apiKey, messagingSenderId } = require('./constants')
-const { debounce } = lodash
+const { debounce } = require('lodash')
 var moment = require('moment')
 var SerialPort = require('serialport'),
   serialPort = new SerialPort('/dev/serial0', {
@@ -164,7 +164,7 @@ function initializeFirebase() {
     console.log('TEST COUNT number of messages in bank:', count)
   })
 
-  const debouncedProcessMessage = debounce(processMessage)
+  const debouncedProcessMessage = debounce(processMessage, 2000)
   messages.on('child_added', function(data) {
     if (initialDataLoaded) {
       debouncedProcessMessage(data.key, data.val())
