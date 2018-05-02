@@ -8,6 +8,7 @@ var SerialPort = require('serialport'),
 //hello
 var path = __dirname + '/images/boh_small.png'
 var printer, numMessages
+var initialDataLoaded = false
 // var Gpio = require('onoff').Gpio //include onoff to interact with the GPIO
 // var LED1 = new Gpio(21, 'out') //display red
 // var LED2 = new Gpio(26, 'out') //display red
@@ -151,9 +152,8 @@ function initializeFirebase() {
   var messages = firebase.database().ref('messages')
   var messageCount = firebase.database().ref('messageCount')
   //var count = 0;
-  messages.on('child_added', function(snap) {
-    count++
-    console.log('added:', snap.key)
+  messages.once('value', function(snapshot) {
+    initialDataLoaded = true
   })
 
   // length will always equal count, since snap.val() will include every child_added event
@@ -164,7 +164,9 @@ function initializeFirebase() {
   })
 
   messages.on('child_added', function(data) {
-    processMessage(data.key, data.val())
+    if (initialDataLoaded) {
+      processMessage(data.key, data.val())
+    }
   })
 
   // numMessages is updated with the number of messages we have in total
@@ -177,7 +179,6 @@ function initializeFirebase() {
 
 serialPort.on('open', function() {
   serialPort.flush(e => {
-    console.log('serialPort initial flush: ', e)
     printer = new Printer(serialPort)
     printer.on('ready', function() {
       initializeFirebase()
