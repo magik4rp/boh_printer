@@ -66,6 +66,7 @@ function processMessage(dataKey, dataValue) {
       .printLine('')
       .printLine('')
       .print()
+    initializeBarGraph()
   }
   console.log('data key: ', dataKey)
   console.log('data value: ', dataValue)
@@ -183,5 +184,4 @@ serialPort.on('open', function() {
   })
 })
 
-initializeBarGraph()
 blink()
