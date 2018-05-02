@@ -40,8 +40,8 @@ function blinkLED2() {
 
 function processMessage(dataKey, dataValue) {
   if (printer) {
-    LED1.writeSync(1)
-    LED2.writeSync(1)
+    // LED1.writeSync(1)
+    // LED2.writeSync(1)
     printer
       .printLine('')
       .printLine('')
@@ -78,17 +78,19 @@ function processMessage(dataKey, dataValue) {
 }
 
 function blink() {
-  function turnOff() {
-    //function to stop blinking
-    LED1.writeSync(0) // Turn LED off
-    LED2.writeSync(0)
-    //LED1.unexport() // Unexport GPIO to free resources
-    //LED2.unexport() // Unexport GPIO to free resources
-  }
+  // function turnOff() {
+  //   //function to stop blinking
+  //   LED1.writeSync(0) // Turn LED off
+  //   LED2.writeSync(0)
+  //   //LED1.unexport() // Unexport GPIO to free resources
+  //   //LED2.unexport() // Unexport GPIO to free resources
+  // }
 
-  setTimeout(turnOff, 25000)
+  // setTimeout(turnOff, 25000)
 
   var blinkInterval3 = setInterval(blinkLED3, 500)
+  var blinkInterval4 = setInterval(blinkLED4, 500)
+  var blinkInterval5 = setInterval(blinkLED5, 500)
 
   function blinkLED3() {
     //function to start blinking
@@ -107,14 +109,50 @@ function blink() {
     //LED3.unexport() // Unexport GPIO to free resources
   }
 
-  setTimeout(endBlink3, 20000) //stop blinking after 5 seconds
+  setTimeout(endBlink3, 25000) //stop blinking after 5 seconds
+  function blinkLED4() {
+    //function to start blinking
+    if (LED4.readSync() === 0) {
+      //check the pin state, if the state is 0 (or off)
+      LED4.writeSync(1) //set pin state to 1 (turn LED on)
+    } else {
+      LED4.writeSync(0) //set pin state to 0 (turn LED off)
+    }
+  }
+
+  function endBlink4() {
+    //function to stop blinking
+    clearInterval(blinkInterval4) // Stop blink intervals
+    LED4.writeSync(0) // Turn LED off
+    //LED3.unexport() // Unexport GPIO to free resources
+  }
+
+  setTimeout(endBlink4, 25000) //stop blinking after 5 seconds
+  function blinkLED5() {
+    //function to start blinking
+    if (LED5.readSync() === 0) {
+      //check the pin state, if the state is 0 (or off)
+      LED5.writeSync(1) //set pin state to 1 (turn LED on)
+    } else {
+      LED5.writeSync(0) //set pin state to 0 (turn LED off)
+    }
+  }
+
+  function endBlink5() {
+    //function to stop blinking
+    clearInterval(blinkInterval5) // Stop blink intervals
+    LED5.writeSync(0) // Turn LED off
+    //LED3.unexport() // Unexport GPIO to free resources
+  }
+
+  setTimeout(endBlink5, 25000) //stop blinking after 5 seconds
 }
 
 function initializeBarGraph() {
   console.log('Count is: ', count)
   //needs to be continuously updating
   var PythonShell = require('python-shell')
-
+  var count = 0
   var options = {
     mode: 'text',
     pythonPath: 'python',
@@ -134,8 +172,6 @@ function initializeBarGraph() {
   )
   barScript.terminate()
 }
-
-var count = 0
 function initializeFirebase() {
   var firebase = require('firebase')
   var config = {
