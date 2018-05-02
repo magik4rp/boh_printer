@@ -35,7 +35,9 @@ display.begin()
 # Run through all bars and colors at different brightness levels.
 
 brightness = 15
-val = int(float(sys.argv[1])) % 23
+val = int(float(sys.argv[1]))
+console.log('VALUE SHOULD BE INTEGER: ', val)
+val = val % 23
 display.set_brightness(brightness)
 display.clear()
 if val > 0:
