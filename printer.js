@@ -107,14 +107,16 @@ function processMessage(dataKey, dataValue) {
       args: [count]
     }
 
-    PythonShell.run('bicolor_bargraph24_test.py', options, function(
-      err,
-      results
-    ) {
-      if (err) throw err
-      // results is an array consisting of messages collected during execution
-      console.log('results: %j', results)
-    })
+    var barScript = PythonShell.run(
+      'bicolor_bargraph24_test.py',
+      options,
+      function(err, results) {
+        if (err) throw err
+        // results is an array consisting of messages collected during execution
+        console.log('results: %j', results)
+      }
+    )
+    barScript.end(() => console.log('Python bar script ended.'))
 
     setTimeout(endBlink3, 20000) //stop blinking after 5 seconds
   }
