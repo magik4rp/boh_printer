@@ -1,9 +1,9 @@
 const { apiKey, messagingSenderId } = require('./constants')
 const { debounce } = require('lodash')
-const tq = require('task-queue')
+const PromiseQueue = require('easy-promise-queue')
 const moment = require('moment')
 
-const printerQueue = tq.Queue({ capacity: 20, concurrency: 1, timeout: 2000 })
+const printerQueue = new PromiseQueue({ concurrency: 1 })
 const SerialPort = require('serialport'),
   serialPort = new SerialPort('/dev/serial0', {
     baudRate: 19200
@@ -218,8 +218,8 @@ function initializeFirebase() {
   messages.on('child_added', async data => {
     if (initialDataLoaded) {
       count++
-      await processMessage(data.key, data.val())
-      //printerQueue.enqueue(processMessage, { args: [data.key, data.val()] })
+      //await processMessage(data.key, data.val())
+      printerQueue.add(() => processMessage(data.key, data.val()))
     }
   })
 
