@@ -212,10 +212,11 @@ function initializeFirebase() {
     count = snap.numChildren()
   })
 
-  messages.on('child_added', function(data) {
+  messages.on('child_added', async data => {
     if (initialDataLoaded) {
       count++
-      printerQueue.enqueue(processMessage, { args: [data.key, data.val()] })
+      await processMessage(data.key, data.val())
+      //printerQueue.enqueue(processMessage, { args: [data.key, data.val()] })
     }
   })
 
