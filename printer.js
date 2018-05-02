@@ -43,44 +43,49 @@ function blinkLED2() {
   }
 }
 
-async function processMessage(dataKey, dataValue) {
-  if (printer) {
-    // LED1.writeSync(1)
-    // LED2.writeSync(1)
-    const printerCall = printer
-      .printLine('')
-      .printLine('')
-      .center(true)
-      .printImage(path)
-      .bold(true)
-      .printLine('BANK OF HYSTERIA')
-      .bold(false)
-      .printLine('')
-      .printLine('Your emotion is valid.')
-      .printLine('We hear you.')
-      .printLine('')
-      .center(false)
-      .bold(true)
-      .printLine('Deposit Details:')
-      .bold(false)
-      .printLine(dataValue)
-      .printLine('')
-      .center(true)
-      .printLine('Thank you for investing with us.')
-      .printLine('Call or text anytime at')
-      .printLine('510-985-9986')
-      .printLine('www.bohproject.org')
-      .printLine('')
-      .printLine('')
-      .print()
-    console.log('Printer call: ', printerCall)
-    initializeBarGraph()
-    blink()
-  }
-  console.log('data key: ', dataKey)
-  console.log('data value: ', dataValue)
-  console.log('number of messages in bank:', numMessages)
-  //console.log('TEST number of messages in bank:', numMessagestest)
+function processMessage(dataKey, dataValue) {
+  return new Promise((resolve, reject) => {
+    if (printer) {
+      console.log('Started printing job.')
+      // LED1.writeSync(1)
+      // LED2.writeSync(1)
+      printer
+        .printLine('')
+        .printLine('')
+        .center(true)
+        .printImage(path)
+        .bold(true)
+        .printLine('BANK OF HYSTERIA')
+        .bold(false)
+        .printLine('')
+        .printLine('Your emotion is valid.')
+        .printLine('We hear you.')
+        .printLine('')
+        .center(false)
+        .bold(true)
+        .printLine('Deposit Details:')
+        .bold(false)
+        .printLine(dataValue)
+        .printLine('')
+        .center(true)
+        .printLine('Thank you for investing with us.')
+        .printLine('Call or text anytime at')
+        .printLine('510-985-9986')
+        .printLine('www.bohproject.org')
+        .printLine('')
+        .printLine('')
+        .print(() => {
+          console.log('Done printing job.')
+          resolve()
+        })
+      console.log('Printer call: ', printerCall)
+      initializeBarGraph()
+      blink()
+    }
+    console.log('data key: ', dataKey)
+    console.log('data value: ', dataValue)
+    console.log('number of messages in bank:', numMessages)
+  })
 }
 
 function blink() {
