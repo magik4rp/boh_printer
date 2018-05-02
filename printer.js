@@ -47,7 +47,7 @@ async function processMessage(dataKey, dataValue) {
   if (printer) {
     // LED1.writeSync(1)
     // LED2.writeSync(1)
-    await printer
+    const printerCall = printer
       .printLine('')
       .printLine('')
       .center(true)
@@ -73,6 +73,7 @@ async function processMessage(dataKey, dataValue) {
       .printLine('')
       .printLine('')
       .print()
+    console.log('Printer call: ', printerCall)
     initializeBarGraph()
     blink()
   }
