@@ -55,7 +55,8 @@ if val > 0:
 else:
     j = 1
     #m = 1
-    for m in range(10):
+    #for m in range(20):
+    while True:
         if j == 1:
             display.set_bar(0, BicolorBargraph24.RED)
             display.write_display()
@@ -159,7 +160,7 @@ else:
 
             j += 1
 i = 1
-while val < 23:
+while val > 0:
     # if val > 14:
         if i == 1:
             display.set_bar(val, BicolorBargraph24.RED)
