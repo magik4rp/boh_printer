@@ -3,6 +3,9 @@ const { debounce } = require('lodash')
 const PromiseQueue = require('easy-promise-queue')
 const moment = require('moment')
 
+// for making prints every few minutes
+const extraPrinterQueue = new PromiseQueue({ concurrency: 1 })
+
 const printerQueue = new PromiseQueue({ concurrency: 1 })
 const SerialPort = require('serialport'),
   serialPort = new SerialPort('/dev/serial0', {
@@ -45,6 +48,24 @@ function blinkLED2() {
   }
 }
 
+function processDelayedMessage(messages, count) {
+  var n = 5
+  var min_wait = 1
+  var curr = 0
+  function print_n() {
+    var i;
+    if (curr+5 > count) {
+      curr = 0;
+    }
+    for (i = 0; i < n; i++) { 
+      key, val = messages[i+curr].key(), messages[i+curr].val()
+      processMessage(key, val)
+    }
+    curr += n;
+  }
+  setInterval(print_n, 1000*60*min_wait)
+}
+ 
 function processMessage(dataKey, dataValue) {
   return new Promise((resolve, reject) => {
     if (printer) {
@@ -229,6 +250,11 @@ function initializeFirebase() {
   messageCount.on('value', function(data) {
     numMessages = data.val()
   })
+
+  // every n minutes a few messages printed
+  processDelayedMessage(messages, count) 
+  asyncPrintRequest();
+
 }
 //need to map numMessages to be inside (0,23)
 //var numMessagestest = 10;
