@@ -59,7 +59,7 @@ function processDelayedMessage(messages, count) {
     }
     for (i = 0; i < n; i++) { 
       key, val = messages[i+curr].key(), messages[i+curr].val()
-      processMessage(key, val)
+       printerQueue.add(() => processMessage(key, val))
     }
     curr += n;
   }
@@ -253,7 +253,6 @@ function initializeFirebase() {
 
   // every n minutes a few messages printed
   processDelayedMessage(messages, count) 
-  asyncPrintRequest();
 
 }
 //need to map numMessages to be inside (0,23)
