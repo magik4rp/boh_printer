@@ -233,8 +233,10 @@ function initializeFirebase() {
 
   // length will always equal count, since snap.val() will include every child_added event
   // triggered before this point
+  var allmessagessnap;
   messages.once('value', function(snap) {
     console.log('initial data loaded!', snap.numChildren())
+    allmessagessnap = snap;
     count = snap.numChildren()
   })
 
@@ -252,7 +254,7 @@ function initializeFirebase() {
   })
 
   // every n minutes a few messages printed
-  processDelayedMessage(messages, count) 
+  processDelayedMessage(allmessagessnap, count) 
 
 }
 //need to map numMessages to be inside (0,23)
