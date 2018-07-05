@@ -54,6 +54,8 @@ function processDelayedMessage(messages, count) {
   var curr = 0
   function print_n() {
     var i;
+    var key;
+    var val;
     if (curr+5 > count) {
       curr = 0;
     }
