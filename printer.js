@@ -256,7 +256,6 @@ function printOldMessages() {
 			var printedCount = 0
 			const shouldPrintMessage = generateShouldPrintMessage()
 			snapshot.forEach(message => {
-				console.log('Printing old message: ', message.val())
 				if (
 					!shouldPrintMessage(message.key) ||
 					printedCount > MAX_PRINT_QUANTITY
@@ -264,6 +263,7 @@ function printOldMessages() {
 					return
 				}
 				printedCount++
+				console.log('Printing old message: ', message.val())
 				printerQueue.add(() => processMessage(message.key, message.val()))
 			})
 		})
