@@ -15,6 +15,7 @@ var path = __dirname + '/images/boh_small.png'
 var printer, numMessages, barScript
 var initialDataLoaded = false
 const ACCEPTABLE_INTERVAL_TIME = 60000
+var lastPrintTime
 
 // LED light stuff
 var Gpio = require('onoff').Gpio //include onoff to interact with the GPIO
@@ -222,6 +223,7 @@ function initializeFirebase() {
 	messages.on('child_added', async data => {
 		if (initialDataLoaded) {
 			count++
+			lastPrintTime = moment.now()
 			printerQueue.add(() => processMessage(data.key, data.val()))
 		}
 	})
@@ -234,6 +236,10 @@ function initializeFirebase() {
 
 function printOldMessages() {
 	if (!initialDataLoaded) {
+		return
+	}
+
+	if (lastPrintTime.diff(moment.now(), 'minutes') < ACCEPTABLE_INTERVAL_TIME) {
 		return
 	}
 
