@@ -252,10 +252,9 @@ function printOldMessages() {
 		.orderByKey()
 		.limitToLast(5)
 		.once('value', async snapshot => {
-			snapshot.forEach(child => {
+			snapshot.forEach(message => {
 				//count++
-				const {key, value} = child
-				console.log('Message: ', value)
+				console.log('Message: ', message.val())
 			})
 			//printerQueue.add(() => processMessage(data.key, data.val()))
 		})
