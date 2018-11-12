@@ -1,5 +1,5 @@
 while true; do
-	if ifconfig wlan0 | grep -q "inet 10.105.132.212" ; then
+	if ifconfig wlan0 | grep -q "10.105.133.77" ; then
 		sleep 60
 	else
 		echo "Network connection down, attempting to reconnect."
