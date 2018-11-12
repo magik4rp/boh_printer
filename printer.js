@@ -254,10 +254,10 @@ function printOldMessages() {
 		.limitToLast(50)
 		.once('value', async snapshot => {
 			var printedCount = 0
-			const shouldPrintMessage = generateShouldPrintMessage()
+			const randomIndices = generateRandomIndices(snapshot.numChildren())
 			snapshot.forEach(message => {
 				if (
-					!shouldPrintMessage(message.key) ||
+					!randomIndices.includes(printedCount) ||
 					printedCount > MAX_PRINT_QUANTITY
 				) {
 					return
@@ -269,11 +269,11 @@ function printOldMessages() {
 		})
 }
 
-function generateShouldPrintMessage() {
-	const randomCharacter = Math.random()
-		.toString(36)
-		.slice(-1)
-	return key => key.slice(-1) < randomCharacter
+function generateRandomIndices(max) {
+	const generateIndex = () => Math.floor(Math.random() * (max + 1))
+	return Array(MAX_PRINT_QUANTITY)
+		.keys()
+		.map(generateIndex)
 }
 
 //need to map numMessages to be inside (0,23)
