@@ -14,8 +14,8 @@ var path = __dirname + '/images/boh_small.png'
 
 var printer, numMessages, barScript
 var initialDataLoaded = false
-const ACCEPTABLE_INTERVAL_TIME = 30000
-const MAX_PRINT_QUANTITY = 5
+const ACCEPTABLE_INTERVAL_TIME = 60000
+const MAX_PRINT_QUANTITY = 1
 var lastPrintTime = moment()
 
 // LED light stuff
