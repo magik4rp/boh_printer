@@ -271,9 +271,7 @@ function printOldMessages() {
 
 function generateRandomIndices(max) {
 	const generateIndex = () => Math.floor(Math.random() * (max + 1))
-	return Array(MAX_PRINT_QUANTITY)
-		.keys()
-		.map(generateIndex)
+	return [...Array(MAX_PRINT_QUANTITY)].keys().map(generateIndex)
 }
 
 //need to map numMessages to be inside (0,23)
