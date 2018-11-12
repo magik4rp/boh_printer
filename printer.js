@@ -15,6 +15,7 @@ var path = __dirname + '/images/boh_small.png'
 var printer, numMessages, barScript
 var initialDataLoaded = false
 const ACCEPTABLE_INTERVAL_TIME = 30000
+const MAX_PRINT_QUANTITY = 5
 var lastPrintTime = moment()
 
 // LED light stuff
@@ -250,14 +251,29 @@ function printOldMessages() {
 
 	messages
 		.orderByKey()
-		.limitToLast(5)
+		.limitToLast(50)
 		.once('value', async snapshot => {
+			var printedCount = 0
+			const shouldPrintMessage = generateShouldPrintMessage()
 			snapshot.forEach(message => {
-				count++
 				console.log('Printing old message: ', message.val())
+				if (
+					!shouldPrintMessage(message.key) ||
+					printedCount > MAX_PRINT_QUANTITY
+				) {
+					return
+				}
+				printedCount++
 				printerQueue.add(() => processMessage(message.key, message.val()))
 			})
 		})
+}
+
+function generateShouldPrintMessage() {
+	const randomCharacter = Math.random()
+		.toString(36)
+		.slice(-1)
+	return key => key.slice(-1) < randomCharacter
 }
 
 //need to map numMessages to be inside (0,23)
